@@ -1,0 +1,111 @@
+/* Header.css */
+
+.eq-header {
+  position: sticky;
+  top: 0;
+  z-index: 60;
+  backdrop-filter: blur(6px) saturate(120%);
+  background: linear-gradient(90deg, rgba(8,10,20,0.6), rgba(12,14,26,0.55));
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+
+.eq-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+/* Brand */
+.eq-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.eq-logo {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  width: 42px;
+  height: 28px;
+}
+
+.bar {
+  width: 5px;
+  background: linear-gradient(180deg, #7dd3fc, #60a5fa);
+  border-radius: 3px;
+  transform-origin: bottom center;
+  animation: pulse 1200ms infinite ease-in-out;
+}
+
+.bar.b1 { height: 6px; animation-delay: -200ms; }
+.bar.b2 { height: 10px; animation-delay: -100ms; }
+.bar.b3 { height: 20px; animation-delay: 0ms; }
+.bar.b4 { height: 14px; animation-delay: -150ms; }
+.bar.b5 { height: 8px; animation-delay: -50ms; }
+
+@keyframes pulse {
+  0% { transform: scaleY(0.6); opacity: 0.8; }
+  50% { transform: scaleY(1.3); opacity: 1; }
+  100% { transform: scaleY(0.7); opacity: 0.85; }
+}
+
+.eq-title {
+  margin: 0;
+  font-size: 20px;
+  letter-spacing: 0.6px;
+  color: #e6eefc;
+  font-weight: 700;
+}
+
+/* Navigation */
+.eq-nav {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+}
+
+.nav-link {
+  color: rgba(230,238,252,0.9);
+  text-decoration: none;
+  font-weight: 600;
+  padding: 8px 10px;
+  border-radius: 8px;
+  transition: all 160ms ease;
+}
+
+.nav-link:hover {
+  transform: translateY(-2px);
+  background: rgba(255,255,255,0.03);
+}
+
+/* Button */
+.btn {
+  padding: 8px 14px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.btn.primary {
+  background: linear-gradient(90deg, #4f46e5, #06b6d4);
+  color: white;
+}
+
+/* Responsive */
+@media (max-width: 820px) {
+  .eq-container { padding: 10px 14px; }
+  .eq-nav { display: none; }
+  .eq-title { font-size: 18px; }
+}
+
+@media (max-width: 420px) {
+  .eq-brand { gap: 8px; }
+  .eq-logo { width: 36px; height: 24px; }
+  .bar { width: 4px; }
+}
