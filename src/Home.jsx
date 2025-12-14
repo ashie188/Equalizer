@@ -4,7 +4,6 @@ import React, { useRef, useState } from "react";
 export default function Home() {
   // UI refs & state you will use in the implementation
   const canvasRef = useRef(null); // visualizer canvas
-  const meterRef = useRef(null); // optional volume meter
   const wsStatusRef = useRef(null); // connection status display (optional)
   const audioCtxRef = useRef(null);
   const streamRef = useRef(null);
@@ -24,12 +23,42 @@ export default function Home() {
   // - toggleMute / change settings / show presets
   // Do NOT implement here per your instruction.
   async function startStreaming() {
+    if (isRunning) return;
     try {
       /* ===============================
-       1. WebSocket connection
-       =============================== */
-      const ws = new WebSocket("ws://localhost:8080/ws/transcribe");
+   1. Microphone access
+   =============================== */
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      streamRef.current = stream;
+
+      /* ===============================
+   2. AudioContext
+   =============================== */
+      const audioCtx = new AudioContext();
+      audioCtxRef.current = audioCtx;
+
+      if (audioCtx.state === "suspended") {
+        await audioCtx.resume();
+      }
+
+      setSampleRate(audioCtx.sampleRate);
+
+      /* ===============================
+   3. WebSocket connection
+   =============================== */
+      const ws = new WebSocket("ws://localhost:5000/ws/transcribe");
       ws.binaryType = "arraybuffer";
+
+      ws.onopen = () => {
+        ws.send(
+          JSON.stringify({
+            type: "meta",
+            sampleRate: audioCtx.sampleRate,
+            channels: 1,
+            encoding: "pcm16",
+          })
+        );
+      };
 
       ws.onmessage = (e) => {
         const msg = JSON.parse(e.data);
@@ -39,19 +68,6 @@ export default function Home() {
       };
 
       wsRef.current = ws;
-
-      /* ===============================
-       2. Microphone access
-       =============================== */
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      streamRef.current = stream;
-
-      /* ===============================
-       3. AudioContext
-       =============================== */
-      const audioCtx = new AudioContext();
-      audioCtxRef.current = audioCtx;
-      setSampleRate(audioCtx.sampleRate);
 
       /* ===============================
        4. Load AudioWorklet
@@ -180,6 +196,7 @@ export default function Home() {
 
     canvas.width = width * dpr;
     canvas.height = height * dpr;
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.scale(dpr, dpr);
 
     ctx.clearRect(0, 0, width, height);
@@ -287,7 +304,6 @@ export default function Home() {
           </div>
 
           <div className="small-controls">
-            <div className="meter" ref={meterRef} aria-hidden="true"></div>
             <div className="help">
               Tip: allow microphone access and speak near your mic.
             </div>
