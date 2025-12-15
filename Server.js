@@ -51,7 +51,7 @@ function startGeminiLiveSession(clientWs) {
     geminiWs.send(
       JSON.stringify({
         setup: {
-          model: "models/gemini-2.5-flash",//"models/gemini-2.5-flash-native-audio-preview-12-2025",
+          model: "gemini-2.5-flash-native-audio-dialog",//"models/gemini-2.5-flash",//"models/gemini-2.5-flash-native-audio-preview-12-2025",
           input_audio_transcription: true,
           response_modalities: ["TEXT"],
           language_code: "en-US", // Good practice to include
