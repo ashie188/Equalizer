@@ -1,16 +1,67 @@
-# React + Vite
+🎧 Equalizer — Real-Time Audio Visualizer & Streaming Transcription
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Equalizer is a full-stack web application that demonstrates real-time audio processing, frequency visualization, and low-latency streaming transcription using modern web technologies.
 
-Currently, two official plugins are available:
+The project focuses on audio pipelines, WebSocket streaming, and responsive UI rendering, rather than one-off request/response APIs.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+🚀 Features
+Frontend
 
-## React Compiler
+🎙️ Microphone access using MediaStream API
+🎚️ Real-time frequency analysis using Web Audio API (AnalyserNode)
+🔵 Smooth circular audio equalizer rendered at 60 FPS
+🔄 Live streaming of audio chunks to backend via WebSocket
+📝 Real-time partial and final transcription rendering
+🎨 Clean, responsive, professional UI
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Backend
+🔌 WebSocket server for continuous bi-directional communication
+📦 Receives small, continuous PCM audio chunks
+🔁 Designed for immediate forwarding to a transcription engine
+🧠 Streaming transcription pipeline with partial/final updates
+♻️ Proper session lifecycle & cleanup handling
 
-## Expanding the ESLint configuration
+🧠 Architecture Flow
+Browser (Mic)
+   ↓ MediaStream API
+AudioWorklet (PCM chunks)
+   ↓ WebSocket
+Backend (Node.js)
+   ↓ Streaming Transcription Engine
+Partial / Final Text
+   ↓ WebSocket
+Frontend UI
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+🛠️ Tech Stack
+Frontend
+React (Vite)
+Web Audio API
+MediaStream API
+Canvas API
+WebSocket
+
+Backend
+Node.js
+Express
+ws (WebSocket)
+Streaming-friendly audio handling
+
+
+▶️ Running the project
+Frontend
+npm install
+npm run dev
+
+Backend
+npm install
+node server.js
+
+📌 Summary
+
+Equalizer demonstrates real-time system design rather than simple API usage.
+It showcases strong understanding of:
+
+Audio pipelines
+Streaming protocols
+Low-latency UI updates
+Full-stack WebSocket architecture
